@@ -57,3 +57,15 @@ resource "azurerm_network_interface" "nic" {
   
   
 }
+resource "azurerm_network_interface" "nic2" {
+  name = "nic-vm2"
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  ip_configuration {
+    name = "Internal"
+    subnet_id = azurerm_subnet.agw-subnet2.id
+    private_ip_address_allocation = "Dyanmic"
+  }
+  
+  
+}
