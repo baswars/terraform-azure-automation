@@ -44,3 +44,16 @@ resource "azurerm_subnet" "agw-subnet1" {
   address_prefixes     = ["10.0.6.0/27"]
 
 }
+
+resource "azurerm_network_interface" "nic" {
+  name = "nic-vm"
+  resource_group_name = azurerm_resource_group.rg.name
+  location = azurerm_resource_group.rg.location
+  ip_configuration {
+    name = "Internal"
+    subnet_id = azurerm_subnet.agw-subnet1.id
+    private_ip_address_allocation = "Dyanmic"
+  }
+  
+  
+}
