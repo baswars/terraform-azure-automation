@@ -1,0 +1,39 @@
+Terraform Drift:
+
+Terraform drift refers to a situation where the actual infrastructure in Azure differs from what is defined in the Terraform configuration or stored in the state file.”
+“This typically happens when someone makes manual changes in the Azure portal or through another tool instead of using Terraform. As a result, Terraform’s state becomes out of sync with the real infrastructure
+
+#### How to Detect Drift
+We can detect drift using terraform plan. When we run this command, Terraform compares the current state file with the actual infrastructure in Azure and shows the differences.”
+If there is drift, Terraform will show changes even though we didn’t modify the code.
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg-vm will be updated in-place
+  ~ resource "azurerm_resource_group" "rg-vm" {
+        id         = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1"
+        name       = "rg-vm1"
+      ~ tags       = {
+          - "env" = "dev" -> null
+        }
+        # (2 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+
+How to Resolve Drift
+
+👉 “There are mainly two ways to resolve drift depending on the situation.”
+
+👉 “First, if the manual changes are not required, we can run terraform apply to bring the infrastructure back to the desired state defined in the code.”
+
+👉 “Second, if the manual changes are valid, we should update the Terraform configuration accordingly and then run terraform apply so that the state file matches the actual infrastructure.”
+
+👉 “In some cases, if the resource is not in the state file, we can also use terraform import to bring existing resources under Terraform management.”
