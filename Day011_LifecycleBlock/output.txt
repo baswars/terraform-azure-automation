@@ -1,0 +1,438 @@
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform init
+Initializing the backend...
+Initializing provider plugins...
+- Finding hashicorp/azurerm versions matching "4.69.0"...
+- Installing hashicorp/azurerm v4.69.0...
+- Installed hashicorp/azurerm v4.69.0 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform fmt 
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform validate
+Success! The configuration is valid.
+
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform plan    
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg-vm will be created
+  + resource "azurerm_resource_group" "rg-vm" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-vm1"
+      + tags     = {
+          + "environment" = "dev"
+        }
+    }
+
+  # azurerm_storage_account.storageaccount will be created
+  + resource "azurerm_storage_account" "storageaccount" {
+      + access_tier                        = (known after apply)
+      + account_kind                       = "StorageV2"
+      + account_replication_type           = "LRS"
+      + account_tier                       = "Standard"
+      + allow_nested_items_to_be_public    = true
+      + cross_tenant_replication_enabled   = false
+      + default_to_oauth_authentication    = false
+      + dns_endpoint_type                  = "Standard"
+      + https_traffic_only_enabled         = true
+      + id                                 = (known after apply)
+      + infrastructure_encryption_enabled  = false
+      + is_hns_enabled                     = false
+      + large_file_share_enabled           = (known after apply)
+      + local_user_enabled                 = true
+      + location                           = "eastus"
+      + min_tls_version                    = "TLS1_2"
+      + name                               = "storageaccoutmyvm1"
+      + nfsv3_enabled                      = false
+      + primary_access_key                 = (sensitive value)
+      + primary_blob_connection_string     = (sensitive value)
+      + primary_blob_endpoint              = (known after apply)
+      + primary_blob_host                  = (known after apply)
+      + primary_blob_internet_endpoint     = (known after apply)
+      + primary_blob_internet_host         = (known after apply)
+      + primary_blob_microsoft_endpoint    = (known after apply)
+      + primary_blob_microsoft_host        = (known after apply)
+      + primary_connection_string          = (sensitive value)
+      + primary_dfs_endpoint               = (known after apply)
+      + primary_dfs_host                   = (known after apply)
+      + primary_dfs_internet_endpoint      = (known after apply)
+      + primary_dfs_internet_host          = (known after apply)
+      + primary_dfs_microsoft_endpoint     = (known after apply)
+      + primary_dfs_microsoft_host         = (known after apply)
+      + primary_file_endpoint              = (known after apply)
+      + primary_file_host                  = (known after apply)
+      + primary_file_internet_endpoint     = (known after apply)
+      + primary_file_internet_host         = (known after apply)
+      + primary_file_microsoft_endpoint    = (known after apply)
+      + primary_file_microsoft_host        = (known after apply)
+      + primary_location                   = (known after apply)
+      + primary_queue_endpoint             = (known after apply)
+      + primary_queue_host                 = (known after apply)
+      + primary_queue_microsoft_endpoint   = (known after apply)
+      + primary_queue_microsoft_host       = (known after apply)
+      + primary_table_endpoint             = (known after apply)
+      + primary_table_host                 = (known after apply)
+      + primary_table_microsoft_endpoint   = (known after apply)
+      + primary_table_microsoft_host       = (known after apply)
+      + primary_web_endpoint               = (known after apply)
+      + primary_web_host                   = (known after apply)
+      + primary_web_internet_endpoint      = (known after apply)
+      + primary_web_internet_host          = (known after apply)
+      + primary_web_microsoft_endpoint     = (known after apply)
+      + primary_web_microsoft_host         = (known after apply)
+      + public_network_access_enabled      = true
+      + queue_encryption_key_type          = "Service"
+      + resource_group_name                = "rg-vm1"
+      + secondary_access_key               = (sensitive value)
+      + secondary_blob_connection_string   = (sensitive value)
+      + secondary_blob_endpoint            = (known after apply)
+      + secondary_blob_host                = (known after apply)
+      + secondary_blob_internet_endpoint   = (known after apply)
+      + secondary_blob_internet_host       = (known after apply)
+      + secondary_blob_microsoft_endpoint  = (known after apply)
+      + secondary_blob_microsoft_host      = (known after apply)
+      + secondary_connection_string        = (sensitive value)
+      + secondary_dfs_endpoint             = (known after apply)
+      + secondary_dfs_host                 = (known after apply)
+      + secondary_dfs_internet_endpoint    = (known after apply)
+      + secondary_dfs_internet_host        = (known after apply)
+      + secondary_dfs_microsoft_endpoint   = (known after apply)
+      + secondary_dfs_microsoft_host       = (known after apply)
+      + secondary_file_endpoint            = (known after apply)
+      + secondary_file_host                = (known after apply)
+      + secondary_file_internet_endpoint   = (known after apply)
+      + secondary_file_internet_host       = (known after apply)
+      + secondary_file_microsoft_endpoint  = (known after apply)
+      + secondary_file_microsoft_host      = (known after apply)
+      + secondary_location                 = (known after apply)
+      + secondary_queue_endpoint           = (known after apply)
+      + secondary_queue_host               = (known after apply)
+      + secondary_queue_microsoft_endpoint = (known after apply)
+      + secondary_queue_microsoft_host     = (known after apply)
+      + secondary_table_endpoint           = (known after apply)
+      + secondary_table_host               = (known after apply)
+      + secondary_table_microsoft_endpoint = (known after apply)
+      + secondary_table_microsoft_host     = (known after apply)
+      + secondary_web_endpoint             = (known after apply)
+      + secondary_web_host                 = (known after apply)
+      + secondary_web_internet_endpoint    = (known after apply)
+      + secondary_web_internet_host        = (known after apply)
+      + secondary_web_microsoft_endpoint   = (known after apply)
+      + secondary_web_microsoft_host       = (known after apply)
+      + sftp_enabled                       = false
+      + shared_access_key_enabled          = true
+      + table_encryption_key_type          = "Service"
+
+      + blob_properties (known after apply)
+
+      + network_rules (known after apply)
+
+      + queue_properties (known after apply)
+
+      + routing (known after apply)
+
+      + share_properties (known after apply)
+
+      + static_website (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + resource_group_id  = (known after apply)
+  + storage_account_id = (known after apply)
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg-vm will be created
+  + resource "azurerm_resource_group" "rg-vm" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-vm1"
+      + tags     = {
+          + "environment" = "dev"
+        }
+    }
+
+  # azurerm_storage_account.storageaccount will be created
+  + resource "azurerm_storage_account" "storageaccount" {
+      + access_tier                        = (known after apply)
+      + account_kind                       = "StorageV2"
+      + account_replication_type           = "LRS"
+      + account_tier                       = "Standard"
+      + allow_nested_items_to_be_public    = true
+      + cross_tenant_replication_enabled   = false
+      + default_to_oauth_authentication    = false
+      + dns_endpoint_type                  = "Standard"
+      + https_traffic_only_enabled         = true
+      + id                                 = (known after apply)
+      + infrastructure_encryption_enabled  = false
+      + is_hns_enabled                     = false
+      + large_file_share_enabled           = (known after apply)
+      + local_user_enabled                 = true
+      + location                           = "eastus"
+      + min_tls_version                    = "TLS1_2"
+      + name                               = "storageaccoutmyvm1"
+      + nfsv3_enabled                      = false
+      + primary_access_key                 = (sensitive value)
+      + primary_blob_connection_string     = (sensitive value)
+      + primary_blob_endpoint              = (known after apply)
+      + primary_blob_host                  = (known after apply)
+      + primary_blob_internet_endpoint     = (known after apply)
+      + primary_blob_internet_host         = (known after apply)
+      + primary_blob_microsoft_endpoint    = (known after apply)
+      + primary_blob_microsoft_host        = (known after apply)
+      + primary_connection_string          = (sensitive value)
+      + primary_dfs_endpoint               = (known after apply)
+      + primary_dfs_host                   = (known after apply)
+      + primary_dfs_internet_endpoint      = (known after apply)
+      + primary_dfs_internet_host          = (known after apply)
+      + primary_dfs_microsoft_endpoint     = (known after apply)
+      + primary_dfs_microsoft_host         = (known after apply)
+      + primary_file_endpoint              = (known after apply)
+      + primary_file_host                  = (known after apply)
+      + primary_file_internet_endpoint     = (known after apply)
+      + primary_file_internet_host         = (known after apply)
+      + primary_file_microsoft_endpoint    = (known after apply)
+      + primary_file_microsoft_host        = (known after apply)
+      + primary_location                   = (known after apply)
+      + primary_queue_endpoint             = (known after apply)
+      + primary_queue_host                 = (known after apply)
+      + primary_queue_microsoft_endpoint   = (known after apply)
+      + primary_queue_microsoft_host       = (known after apply)
+      + primary_table_endpoint             = (known after apply)
+      + primary_table_host                 = (known after apply)
+      + primary_table_microsoft_endpoint   = (known after apply)
+      + primary_table_microsoft_host       = (known after apply)
+      + primary_web_endpoint               = (known after apply)
+      + primary_web_host                   = (known after apply)
+      + primary_web_internet_endpoint      = (known after apply)
+      + primary_web_internet_host          = (known after apply)
+      + primary_web_microsoft_endpoint     = (known after apply)
+      + primary_web_microsoft_host         = (known after apply)
+      + public_network_access_enabled      = true
+      + queue_encryption_key_type          = "Service"
+      + resource_group_name                = "rg-vm1"
+      + secondary_access_key               = (sensitive value)
+      + secondary_blob_connection_string   = (sensitive value)
+      + secondary_blob_endpoint            = (known after apply)
+      + secondary_blob_host                = (known after apply)
+      + secondary_blob_internet_endpoint   = (known after apply)
+      + secondary_blob_internet_host       = (known after apply)
+      + secondary_blob_microsoft_endpoint  = (known after apply)
+      + secondary_blob_microsoft_host      = (known after apply)
+      + secondary_connection_string        = (sensitive value)
+      + secondary_dfs_endpoint             = (known after apply)
+      + secondary_dfs_host                 = (known after apply)
+      + secondary_dfs_internet_endpoint    = (known after apply)
+      + secondary_dfs_internet_host        = (known after apply)
+      + secondary_dfs_microsoft_endpoint   = (known after apply)
+      + secondary_dfs_microsoft_host       = (known after apply)
+      + secondary_file_endpoint            = (known after apply)
+      + secondary_file_host                = (known after apply)
+      + secondary_file_internet_endpoint   = (known after apply)
+      + secondary_file_internet_host       = (known after apply)
+      + secondary_file_microsoft_endpoint  = (known after apply)
+      + secondary_file_microsoft_host      = (known after apply)
+      + secondary_location                 = (known after apply)
+      + secondary_queue_endpoint           = (known after apply)
+      + secondary_queue_host               = (known after apply)
+      + secondary_queue_microsoft_endpoint = (known after apply)
+      + secondary_queue_microsoft_host     = (known after apply)
+      + secondary_table_endpoint           = (known after apply)
+      + secondary_table_host               = (known after apply)
+      + secondary_table_microsoft_endpoint = (known after apply)
+      + secondary_table_microsoft_host     = (known after apply)
+      + secondary_web_endpoint             = (known after apply)
+      + secondary_web_host                 = (known after apply)
+      + secondary_web_internet_endpoint    = (known after apply)
+      + secondary_web_internet_host        = (known after apply)
+      + secondary_web_microsoft_endpoint   = (known after apply)
+      + secondary_web_microsoft_host       = (known after apply)
+      + sftp_enabled                       = false
+      + shared_access_key_enabled          = true
+      + table_encryption_key_type          = "Service"
+
+      + blob_properties (known after apply)
+
+      + network_rules (known after apply)
+
+      + queue_properties (known after apply)
+
+      + routing (known after apply)
+
+      + share_properties (known after apply)
+
+      + static_website (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + resource_group_id  = (known after apply)
+  + storage_account_id = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg-vm: Creating...
+azurerm_resource_group.rg-vm: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg-vm: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg-vm: Creation complete after 28s [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1]
+azurerm_storage_account.storageaccount: Creating...
+azurerm_storage_account.storageaccount: Still creating... [00m10s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [00m20s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [00m30s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [00m40s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [00m50s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m00s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m10s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m20s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m30s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m40s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [01m50s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [02m00s elapsed]
+azurerm_storage_account.storageaccount: Still creating... [02m10s elapsed]
+azurerm_storage_account.storageaccount: Creation complete after 2m14s [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1/providers/Microsoft.Storage/storageAccounts/storageaccoutmyvm1]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+resource_group_id = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1"
+storage_account_id = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1/providers/Microsoft.Storage/storageAccounts/storageaccoutmyvm1"
+
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> terraform destroy                                              
+azurerm_resource_group.rg-vm: Refreshing state... [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1]
+azurerm_storage_account.storageaccount: Refreshing state... [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1/providers/Microsoft.Storage/storageAccounts/storageaccoutmyvm1]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform planned the following actions, but then encountered a problem:
+
+  # azurerm_storage_account.storageaccount will be destroyed
+  - resource "azurerm_storage_account" "storageaccount" {
+      - access_tier                        = "Hot" -> null
+      - account_kind                       = "StorageV2" -> null
+      - account_replication_type           = "LRS" -> null
+      - account_tier                       = "Standard" -> null
+      - allow_nested_items_to_be_public    = true -> null
+      - cross_tenant_replication_enabled   = false -> null
+      - default_to_oauth_authentication    = false -> null
+      - dns_endpoint_type                  = "Standard" -> null
+      - https_traffic_only_enabled         = true -> null
+      - id                                 = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1/providers/Microsoft.Storage/storageAccounts/storageaccoutmyvm1" -> null
+      - infrastructure_encryption_enabled  = false -> null
+      - is_hns_enabled                     = false -> null
+      - large_file_share_enabled           = false -> null
+      - local_user_enabled                 = true -> null
+      - location                           = "eastus" -> null
+      - min_tls_version                    = "TLS1_2" -> null
+      - name                               = "storageaccoutmyvm1" -> null
+      - nfsv3_enabled                      = false -> null
+      - primary_access_key                 = (sensitive value) -> null
+      - primary_blob_connection_string     = (sensitive value) -> null
+      - primary_blob_endpoint              = "https://storageaccoutmyvm1.blob.core.windows.net/" -> null
+      - primary_blob_host                  = "storageaccoutmyvm1.blob.core.windows.net" -> null
+      - primary_connection_string          = (sensitive value) -> null
+      - primary_dfs_endpoint               = "https://storageaccoutmyvm1.dfs.core.windows.net/" -> null
+      - primary_dfs_host                   = "storageaccoutmyvm1.dfs.core.windows.net" -> null
+      - primary_file_endpoint              = "https://storageaccoutmyvm1.file.core.windows.net/" -> null
+      - primary_file_host                  = "storageaccoutmyvm1.file.core.windows.net" -> null
+      - primary_location                   = "eastus" -> null
+      - primary_queue_endpoint             = "https://storageaccoutmyvm1.queue.core.windows.net/" -> null
+      - primary_queue_host                 = "storageaccoutmyvm1.queue.core.windows.net" -> null
+      - primary_table_endpoint             = "https://storageaccoutmyvm1.table.core.windows.net/" -> null
+      - primary_table_host                 = "storageaccoutmyvm1.table.core.windows.net" -> null
+      - primary_web_endpoint               = "https://storageaccoutmyvm1.z13.web.core.windows.net/" -> null
+      - primary_web_host                   = "storageaccoutmyvm1.z13.web.core.windows.net" -> null
+      - public_network_access_enabled      = true -> null
+      - queue_encryption_key_type          = "Service" -> null
+      - resource_group_name                = "rg-vm1" -> null
+      - secondary_access_key               = (sensitive value) -> null
+      - secondary_connection_string        = (sensitive value) -> null
+      - sftp_enabled                       = false -> null
+      - shared_access_key_enabled          = true -> null
+      - table_encryption_key_type          = "Service" -> null
+      - tags                               = {} -> null
+        # (57 unchanged attributes hidden)
+
+      - blob_properties {
+          - change_feed_enabled           = false -> null
+          - change_feed_retention_in_days = 0 -> null
+          - last_access_time_enabled      = false -> null
+          - versioning_enabled            = false -> null
+            # (1 unchanged attribute hidden)
+        }
+
+      - queue_properties {
+          - hour_metrics {
+              - enabled               = false -> null
+              - include_apis          = false -> null
+              - retention_policy_days = 0 -> null
+              - version               = "1.0" -> null
+            }
+          - logging {
+              - delete                = false -> null
+              - read                  = false -> null
+              - retention_policy_days = 0 -> null
+              - version               = "1.0" -> null
+              - write                 = false -> null
+            }
+          - minute_metrics {
+              - enabled               = false -> null
+              - include_apis          = false -> null
+              - retention_policy_days = 0 -> null
+              - version               = "1.0" -> null
+            }
+        }
+
+      - share_properties {
+          - retention_policy {
+              - days = 7 -> null
+            }
+        }
+    }
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Changes to Outputs:
+  - resource_group_id  = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1" -> null
+  - storage_account_id = "/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-vm1/providers/Microsoft.Storage/storageAccounts/storageaccoutmyvm1" -> null
+╷
+│ Error: Instance cannot be destroyed
+│
+│   on main.tf line 16:
+│   16: resource "azurerm_storage_account" "storageaccount" {
+│
+│ Resource azurerm_storage_account.storageaccount has lifecycle.prevent_destroy set, but the plan calls for this resource to be destroyed. To avoid this     
+│ error and continue with the plan, either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target option.
+╵
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day011_LifecycleBlock> 
