@@ -1,0 +1,134 @@
+Workspace:
+
+👉 “In Terraform, a workspace is a feature that allows us to manage multiple environments using the same Terraform configuration. Instead of writing separate code for environments like dev, QA, or production, we can use workspaces to maintain separate state files for each environment.”
+
+👉 “Each workspace keeps its own state file, so even though the code is the same, the infrastructure created is different and isolated. For example, if I create a resource in the ‘dev’ workspace, it will not affect the ‘prod’ workspace.”
+
+👉 “We can switch between environments using commands like terraform workspace select dev, and Terraform will automatically use the corresponding state file.
+
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-default"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform workspace select dev
+Switched to workspace "dev".
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform plan
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-dev"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-dev"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions in workspace "dev"?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 30s [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-dev]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform workspace select default
+Switched to workspace "default".
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-default"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 29s [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-default]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform workspace select qa     
+Switched to workspace "qa".
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day013_Workspace> terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-qa"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions in workspace "qa"?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 28s [id=/subscriptions/f581888a-e198-4db8-ac71-24910e81a209/resourceGroups/rg-qa]
