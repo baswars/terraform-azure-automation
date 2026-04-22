@@ -1,0 +1,19 @@
+Dynamic block is a special type of block that is used to create multiple nested blocks inside a configuration dynamically.
+It helps to reduce code duplication, make the code flexible, and improve code readability.
+
+In Terraform, there are situations where a resource contains repeated nested blocks, such as security rules in an NSG or multiple subnets inside a virtual network. If these nested blocks are fixed, then we can create them manually.
+However, in real-world scenarios, the number of nested blocks is dynamic and depends on input variables.
+
+In those cases, instead of hardcoding multiple blocks, we use a dynamic block. It allows us to loop over a collection and generate multiple nested blocks.
+
+In a real-world scenario, when creating an Azure Virtual Network (VNet), we often need to create multiple subnets inside it. Since the number of subnets can vary based on requirements, we use a dynamic block to generate them instead of hardcoding each subnet.
+
+
+  dynamic "subnet" {
+    for_each = var.subnets
+
+    content {
+      name             = subnet.value.name
+      address_prefixes = subnet.value.address_prefixes
+    }
+  }
