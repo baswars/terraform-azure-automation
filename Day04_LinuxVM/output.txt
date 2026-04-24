@@ -1,0 +1,903 @@
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform init                     
+Initializing the backend...
+
+Successfully configured the backend "azurerm"! Terraform will automatically
+use this backend unless the backend configuration changes.
+Initializing provider plugins...
+- Finding hashicorp/azurerm versions matching "4.69.0"...
+- Installing hashicorp/azurerm v4.69.0...
+- Installed hashicorp/azurerm v4.69.0 (signed by HashiCorp)
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform fmt                      
+main.tf
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform validate                 
+Success! The configuration is valid.
+
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform plan                     
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.linuxvm will be created
+  + resource "azurerm_linux_virtual_machine" "linuxvm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm-day04"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-day04"
+      + size                                                   = "Standard_F2"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-day04"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg-day04"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.nsg_associationNic will be created
+  + resource "azurerm_network_interface_security_group_association" "nsg_associationNic" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = (known after apply)
+    }
+
+  # azurerm_network_security_group.nsg will be created
+  + resource "azurerm_network_security_group" "nsg" {
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "acceptanceTestSecurityGroup1"
+      + resource_group_name = "rg-day04"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "SSH"
+              + priority                                   = 100
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+        ]
+    }
+
+  # azurerm_public_ip.pip will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "eastus"
+      + name                    = "pip-day04"
+      + resource_group_name     = "rg-day04"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-day04"
+    }
+
+  # azurerm_subnet.subnet1 will be created
+  + resource "azurerm_subnet" "subnet1" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet1"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg-day04"
+      + virtual_network_name                          = "vnet-day04"
+    }
+
+  # azurerm_subnet_network_security_group_association.nsg_association will be created
+  + resource "azurerm_subnet_network_security_group_association" "nsg_association" {
+      + id                        = (known after apply)
+      + network_security_group_id = (known after apply)
+      + subnet_id                 = (known after apply)
+    }
+
+  # azurerm_virtual_network.vnet will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "eastus"
+      + name                           = "vnet-day04"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg-day04"
+      + subnet                         = (known after apply)
+    }
+
+Plan: 9 to add, 0 to change, 0 to destroy.
+
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform apply                    
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.linuxvm will be created
+  + resource "azurerm_linux_virtual_machine" "linuxvm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "eastus"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm-day04"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-day04"
+      + size                                                   = "Standard_F2"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "eastus"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-day04"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg-day04"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.nsg_associationNic will be created
+  + resource "azurerm_network_interface_security_group_association" "nsg_associationNic" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = (known after apply)
+    }
+
+  # azurerm_network_security_group.nsg will be created
+  + resource "azurerm_network_security_group" "nsg" {
+      + id                  = (known after apply)
+      + location            = "eastus"
+      + name                = "acceptanceTestSecurityGroup1"
+      + resource_group_name = "rg-day04"
+      + security_rule       = [
+          + {
+              + access                                     = "Allow"
+              + destination_address_prefix                 = "*"
+              + destination_address_prefixes               = []
+              + destination_application_security_group_ids = []
+              + destination_port_range                     = "22"
+              + destination_port_ranges                    = []
+              + direction                                  = "Inbound"
+              + name                                       = "SSH"
+              + priority                                   = 100
+              + protocol                                   = "Tcp"
+              + source_address_prefix                      = "*"
+              + source_address_prefixes                    = []
+              + source_application_security_group_ids      = []
+              + source_port_range                          = "*"
+              + source_port_ranges                         = []
+                # (1 unchanged attribute hidden)
+            },
+        ]
+    }
+
+  # azurerm_public_ip.pip will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "eastus"
+      + name                    = "pip-day04"
+      + resource_group_name     = "rg-day04"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_resource_group.rg will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "eastus"
+      + name     = "rg-day04"
+    }
+
+  # azurerm_subnet.subnet1 will be created
+  + resource "azurerm_subnet" "subnet1" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet1"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg-day04"
+      + virtual_network_name                          = "vnet-day04"
+    }
+
+  # azurerm_subnet_network_security_group_association.nsg_association will be created
+  + resource "azurerm_subnet_network_security_group_association" "nsg_association" {
+      + id                        = (known after apply)
+      + network_security_group_id = (known after apply)
+      + subnet_id                 = (known after apply)
+    }
+
+  # azurerm_virtual_network.vnet will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "eastus"
+      + name                           = "vnet-day04"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg-day04"
+      + subnet                         = (known after apply)
+    }
+
+Plan: 9 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 29s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_public_ip.pip: Creating...
+azurerm_virtual_network.vnet: Creating...
+azurerm_network_security_group.nsg: Creating...
+azurerm_public_ip.pip: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_network_security_group.nsg: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_virtual_network.vnet: Creation complete after 8s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_subnet.subnet1: Creating...
+azurerm_subnet.subnet1: Creation complete after 9s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_subnet_network_security_group_association.nsg_association: Creating...
+azurerm_network_interface.nic: Creating...
+azurerm_subnet_network_security_group_association.nsg_association: Creation complete after 8s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_network_interface.nic: Still creating... [00m10s elapsed]
+azurerm_network_interface.nic: Creation complete after 12s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04]
+azurerm_network_interface_security_group_association.nsg_associationNic: Creating...
+azurerm_linux_virtual_machine.linuxvm: Creating...
+azurerm_network_interface_security_group_association.nsg_associationNic: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+╷
+│ Error: creating Linux Virtual Machine (Subscription: "a863c08a-12ed-48e5-a659-57ef8bbfe98c"
+│ Resource Group Name: "rg-day04"
+│ Virtual Machine Name: "linuxvm-day04"): performing CreateOrUpdate: unexpected status 409 (409 Conflict) with error: SkuNotAvailable: The requested VM size for resource 'Following SKUs have failed for Capacity Restrictions: Standard_F2' is currently not available in location 'eastus'. Please try another size or deploy to a different location or different zone. See https://aka.ms/azureskunotavailable for details.
+│ 
+│   with azurerm_linux_virtual_machine.linuxvm,
+│   on main.tf line 92, in resource "azurerm_linux_virtual_machine" "linuxvm":
+│   92: resource "azurerm_linux_virtual_machine" "linuxvm" {
+│ 
+╵
+Releasing state lock. This may take a few moments...
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform apply 
+Acquiring state lock. This may take a few moments...
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_public_ip.pip: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_virtual_network.vnet: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_network_security_group.nsg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_subnet.subnet1: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_subnet_network_security_group_association.nsg_association: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_network_interface.nic: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04]
+azurerm_network_interface_security_group_association.nsg_associationNic: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.linuxvm will be created
+  + resource "azurerm_linux_virtual_machine" "linuxvm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm-day04"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-day04"
+      + size                                                   = "Standard_F2"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic must be replaced
+-/+ resource "azurerm_network_interface" "nic" {
+      ~ applied_dns_servers            = [] -> (known after apply)
+      - dns_servers                    = [] -> null
+      ~ id                             = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04" -> (known after apply)
+      ~ internal_domain_name_suffix    = "nry2twiali4e5lg1pzbwvxz5aa.bx.internal.cloudapp.net" -> (known after apply)
+      ~ location                       = "eastus" -> "westeurope" # forces replacement
+      + mac_address                    = (known after apply)
+        name                           = "nic-day04"
+      ~ private_ip_address             = "10.0.1.4" -> (known after apply)
+      ~ private_ip_addresses           = [
+          - "10.0.1.4",
+        ] -> (known after apply)
+      - tags                           = {} -> null
+      + virtual_machine_id             = (known after apply)
+        # (7 unchanged attributes hidden)
+
+      ~ ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+            name                                               = "ipconfig1"
+          ~ primary                                            = true -> (known after apply)
+          ~ private_ip_address                                 = "10.0.1.4" -> (known after apply)
+          ~ public_ip_address_id                               = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04" -> (known after apply)
+            # (3 unchanged attributes hidden)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.nsg_associationNic must be replaced
+-/+ resource "azurerm_network_interface_security_group_association" "nsg_associationNic" {
+      ~ id                        = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1" -> (known after apply)
+      ~ network_interface_id      = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04" -> (known after apply) # forces replacement
+      ~ network_security_group_id = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1" -> (known after apply) # forces replacement
+    }
+
+  # azurerm_network_security_group.nsg must be replaced
+-/+ resource "azurerm_network_security_group" "nsg" {
+      ~ id                  = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1" -> (known after apply)
+      ~ location            = "eastus" -> "westeurope" # forces replacement
+        name                = "acceptanceTestSecurityGroup1"
+      - tags                = {} -> null
+        # (2 unchanged attributes hidden)
+    }
+
+  # azurerm_public_ip.pip must be replaced
+-/+ resource "azurerm_public_ip" "pip" {
+      + fqdn                    = (known after apply)
+      ~ id                      = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04" -> (known after apply)
+      ~ ip_address              = "20.124.186.114" -> (known after apply)
+      - ip_tags                 = {} -> null
+      ~ location                = "eastus" -> "westeurope" # forces replacement
+        name                    = "pip-day04"
+      - tags                    = {} -> null
+      - zones                   = [] -> null
+        # (11 unchanged attributes hidden)
+    }
+
+  # azurerm_resource_group.rg must be replaced
+-/+ resource "azurerm_resource_group" "rg" {
+      ~ id         = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04" -> (known after apply)
+      ~ location   = "eastus" -> "westeurope" # forces replacement
+        name       = "rg-day04"
+      - tags       = {} -> null
+        # (1 unchanged attribute hidden)
+    }
+
+  # azurerm_subnet_network_security_group_association.nsg_association must be replaced
+-/+ resource "azurerm_subnet_network_security_group_association" "nsg_association" {
+      ~ id                        = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1" -> (known after apply)
+      ~ network_security_group_id = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1" -> (known after apply) # forces replacement
+        # (1 unchanged attribute hidden)
+    }
+
+  # azurerm_virtual_network.vnet must be replaced
+-/+ resource "azurerm_virtual_network" "vnet" {
+      ~ dns_servers                    = [] -> (known after apply)
+      - flow_timeout_in_minutes        = 0 -> null
+      ~ guid                           = "d9c9716c-5a00-4f3c-acdb-7e436adf3f00" -> (known after apply)
+      ~ id                             = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04" -> (known after apply)
+      ~ location                       = "eastus" -> "westeurope" # forces replacement
+        name                           = "vnet-day04"
+      ~ subnet                         = [
+          - {
+              - address_prefixes                              = [
+                  - "10.0.1.0/24",
+                ]
+              - default_outbound_access_enabled               = true
+              - delegation                                    = []
+              - id                                            = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1"
+              - name                                          = "subnet1"
+              - private_endpoint_network_policies             = "Disabled"
+              - private_link_service_network_policies_enabled = true
+              - security_group                                = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1"
+              - service_endpoint_policy_ids                   = []
+              - service_endpoints                             = []
+                # (1 unchanged attribute hidden)
+            },
+        ] -> (known after apply)
+      - tags                           = {} -> null
+        # (5 unchanged attributes hidden)
+    }
+
+Plan: 8 to add, 0 to change, 7 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_network_interface_security_group_association.nsg_associationNic: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_subnet_network_security_group_association.nsg_association: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_network_interface_security_group_association.nsg_associationNic: Destruction complete after 6s
+azurerm_network_interface.nic: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04]
+azurerm_subnet_network_security_group_association.nsg_association: Destruction complete after 8s
+azurerm_network_security_group.nsg: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_network_interface.nic: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-...ft.Network/networkInterfaces/nic-day04, 00m10s elapsed]
+azurerm_network_security_group.nsg: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-...ityGroups/acceptanceTestSecurityGroup1, 00m10s elapsed]
+azurerm_network_security_group.nsg: Destruction complete after 12s
+azurerm_network_interface.nic: Destruction complete after 14s
+azurerm_public_ip.pip: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_virtual_network.vnet: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_virtual_network.vnet: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-...oft.Network/virtualNetworks/vnet-day04, 00m10s elapsed]
+azurerm_public_ip.pip: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-...ft.Network/publicIPAddresses/pip-day04, 00m10s elapsed]
+azurerm_virtual_network.vnet: Destruction complete after 12s
+azurerm_public_ip.pip: Destruction complete after 12s
+azurerm_resource_group.rg: Destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_resource_group.rg: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04, 00m10s elapsed]
+azurerm_resource_group.rg: Still destroying... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04, 00m20s elapsed]
+azurerm_resource_group.rg: Destruction complete after 25s
+azurerm_resource_group.rg: Creating...
+azurerm_resource_group.rg: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg: Creation complete after 28s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_virtual_network.vnet: Creating...
+azurerm_public_ip.pip: Creating...
+azurerm_network_security_group.nsg: Creating...
+azurerm_public_ip.pip: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_network_security_group.nsg: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_virtual_network.vnet: Creation complete after 10s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_subnet_network_security_group_association.nsg_association: Creating...
+azurerm_network_interface.nic: Creating...
+╷
+│ Error: creating Network Interface (Subscription: "a863c08a-12ed-48e5-a659-57ef8bbfe98c"
+│ Resource Group Name: "rg-day04"
+│ Network Interface Name: "nic-day04"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with error: InvalidResourceReference: Resource /subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1 referenced by resource /subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04 was not found. Please make sure that the referenced resource exists, and that both resources are in the same region.
+│ 
+│   with azurerm_network_interface.nic,
+│   on main.tf line 51, in resource "azurerm_network_interface" "nic":
+│   51: resource "azurerm_network_interface" "nic" { # This block defines an Azure Network Interface resource.
+│ 
+╵
+╷
+│ Error: Subnet (Subscription: "a863c08a-12ed-48e5-a659-57ef8bbfe98c"
+│ Resource Group Name: "rg-day04"
+│ Virtual Network Name: "vnet-day04"
+│ Subnet Name: "subnet1") was not found
+│ 
+│   with azurerm_subnet_network_security_group_association.nsg_association,
+│   on main.tf line 82, in resource "azurerm_subnet_network_security_group_association" "nsg_association":
+│   82: resource "azurerm_subnet_network_security_group_association" "nsg_association" { # This block associates the NSG with the subnet
+│ 
+╵
+Releasing state lock. This may take a few moments...
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform apply 
+Acquiring state lock. This may take a few moments...
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_public_ip.pip: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_virtual_network.vnet: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_network_security_group.nsg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_subnet.subnet1: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the last "terraform apply" which may have affected this plan:
+
+  # azurerm_subnet.subnet1 has been deleted
+  - resource "azurerm_subnet" "subnet1" {
+      - id                                            = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1" -> null
+        name                                          = "subnet1"
+        # (9 unchanged attributes hidden)
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.linuxvm will be created
+  + resource "azurerm_linux_virtual_machine" "linuxvm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm-day04"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-day04"
+      + size                                                   = "Standard_F2"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "westeurope"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-day04"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg-day04"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04"
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface_security_group_association.nsg_associationNic will be created
+  + resource "azurerm_network_interface_security_group_association" "nsg_associationNic" {
+      + id                        = (known after apply)
+      + network_interface_id      = (known after apply)
+      + network_security_group_id = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1"
+    }
+
+  # azurerm_subnet.subnet1 will be created
+  + resource "azurerm_subnet" "subnet1" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet1"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg-day04"
+      + virtual_network_name                          = "vnet-day04"
+    }
+
+  # azurerm_subnet_network_security_group_association.nsg_association will be created
+  + resource "azurerm_subnet_network_security_group_association" "nsg_association" {
+      + id                        = (known after apply)
+      + network_security_group_id = "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1"
+      + subnet_id                 = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_subnet.subnet1: Creating...
+azurerm_subnet.subnet1: Creation complete after 9s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_subnet_network_security_group_association.nsg_association: Creating...
+azurerm_network_interface.nic: Creating...
+azurerm_subnet_network_security_group_association.nsg_association: Creation complete after 8s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_network_interface.nic: Still creating... [00m10s elapsed]
+azurerm_network_interface.nic: Creation complete after 12s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04]
+azurerm_network_interface_security_group_association.nsg_associationNic: Creating...
+azurerm_linux_virtual_machine.linuxvm: Creating...
+azurerm_network_interface_security_group_association.nsg_associationNic: Creation complete after 4s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+╷
+│ Error: creating Linux Virtual Machine (Subscription: "a863c08a-12ed-48e5-a659-57ef8bbfe98c"
+│ Resource Group Name: "rg-day04"
+│ Virtual Machine Name: "linuxvm-day04"): performing CreateOrUpdate: unexpected status 409 (409 Conflict) with error: SkuNotAvailable: The requested VM size for resource 'Following SKUs have failed for Capacity Restrictions: Standard_F2' is currently not available in location 'westeurope'. Please try another size or deploy to a different location or different zone. See https://aka.ms/azureskunotavailable for details.
+│ 
+│   with azurerm_linux_virtual_machine.linuxvm,
+│   on main.tf line 95, in resource "azurerm_linux_virtual_machine" "linuxvm":
+│   95: resource "azurerm_linux_virtual_machine" "linuxvm" {
+│ 
+╵
+Releasing state lock. This may take a few moments...
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day04_LinuxVM> terraform apply 
+Acquiring state lock. This may take a few moments...
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04]
+azurerm_public_ip.pip: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/publicIPAddresses/pip-day04]
+azurerm_virtual_network.vnet: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04]
+azurerm_network_security_group.nsg: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+azurerm_subnet.subnet1: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_subnet_network_security_group_association.nsg_association: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/virtualNetworks/vnet-day04/subnets/subnet1]
+azurerm_network_interface.nic: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04]
+azurerm_network_interface_security_group_association.nsg_associationNic: Refreshing state... [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04|/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkSecurityGroups/acceptanceTestSecurityGroup1]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.linuxvm will be created
+  + resource "azurerm_linux_virtual_machine" "linuxvm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "adminuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm-day04"
+      + network_interface_ids                                  = [
+          + "/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Network/networkInterfaces/nic-day04",
+        ]
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg-day04"
+      + size                                                   = "Standard_D4s_v3"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "0001-com-ubuntu-server-jammy"
+          + publisher = "Canonical"
+          + sku       = "22_04-lts"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_linux_virtual_machine.linuxvm: Creating...
+azurerm_linux_virtual_machine.linuxvm: Still creating... [00m10s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Still creating... [00m20s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Still creating... [00m30s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Still creating... [00m40s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Still creating... [00m50s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Still creating... [01m00s elapsed]
+azurerm_linux_virtual_machine.linuxvm: Creation complete after 1m3s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg-day04/providers/Microsoft.Compute/virtualMachines/linuxvm-day04]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
