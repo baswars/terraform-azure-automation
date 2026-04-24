@@ -14,17 +14,16 @@ The provider block configures the specified provider. In this case, it's configu
 Storage Account Block
 The resource block defines the Azure Storage Account that will be created within the specified resource group.
 
-hcl
-Copy code
+
 resource "azurerm_storage_account" "storage-account" {
-  name                     = "storageaccountday02"
+  name                     = "storageaccobackend"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
 resource "azurerm_storage_account" "storage-account": Defines an Azure Storage Account resource.
-name: The name of the storage account (storageaccountday02). This name must be globally unique.
+name: The name of the storage account (storageaccobackend). This name must be globally unique.
 resource_group_name: The name of the resource group where the storage account will be created, referencing the previously defined resource group.
 location: The Azure region where the storage account will be created, referencing the location of the resource group.
 account_tier: The performance tier of the storage account (Standard).
@@ -34,7 +33,7 @@ To use this Terraform configuration, follow these steps:
 
 Clone the Repository:
 
-git clone https://github.com/yourusername/terraform-azure-automation.git
+git clone https://github.com/baswars/terraform-azure-automation
 cd terraform-azure-automation
 Initialize Terraform:
 Initialize the working directory containing the Terraform configuration files. This will download the necessary provider plugins.
