@@ -47,7 +47,7 @@ To use this Terraform configuration, follow these steps:
 
 Clone the Repository:
 
-git clone https://github.com/yourusername/terraform-azure-automation.git
+git clone https://github.com/baswars/terraform-azure-automation
 cd terraform-azure-automation
 Initialize Terraform:
 Initialize the working directory containing the Terraform configuration files. This will download the necessary provider plugins.
@@ -72,11 +72,3 @@ To remove the resources created by this configuration, you can run:
 terraform destroy
 This command will delete all the resources defined in your Terraform configuration.
 
-Contributing
-We welcome contributions to enhance and expand the capabilities of this repository. Please follow these steps to contribute:
-
-Fork the repository.
-Create a new branch for your feature or bugfix.
-Make your changes and commit them with clear commit messages.
-Push your changes to your forked repository.
-Create a pull request to merge your changes into the main repository.

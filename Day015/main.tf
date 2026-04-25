@@ -1,93 +1,9 @@
-variable "rg_name" {
-  default = "rg-vm" 
-}
 
-
-variable "location" {
-  default = "West Europe" 
-}
-variable "vnet_name" {
-  default = "vnet"
-}
-variable "address_space" {
-  default = ["10.0.0.0/16"]
-
-}
-variable "subnet_name" {
-  default = "subnet1"
-
-}
-variable "address_prefixes" {
-  default = ["10.0.1.0/24"]
-
-}
-variable "pip_name" {
-  default = "pip"
-
-}
-variable "pip_allocation_method" {
-  default = "Static"
-
-}
-variable "nic_name" {
-  default = "nic"
-
-}
-variable "ip_config" {
-  default = "ipconfig1"
-}
-
-variable "vm_name" {
-  default = "linuxvm"
-
-}
-variable "vm_size" {
-  default = "Standard_D4s_v3"
-
-}
-variable "admin_username" {
-  default = "adminuser"
-
-}
-variable "admin_password" {
-  default = "AdminPassword123!"
-
-}
-variable "disable_password_authentication" {
-  default = false
-
-}
-variable "caching" {
-  default = "ReadWrite"
-
-}
-variable "storage_account_type" {
-  default = "Standard_LRS"
-
-}
-variable "publisher" {
-  default = "Canonical"
-
-}
-variable "offer" {
-  default = "0001-com-ubuntu-server-jammy"
-
-}
-variable "sku" {
-  default = "22_04-lts"
-
-}
-variable "version_vm" {
-  default = "latest"
-
-}
 resource "azurerm_resource_group" "rg" { # This block defines an Azure Resource Group resource. 
   name     = var.rg_name
   location = var.location
 
 }
-
-## If no value is supplied during runtime, Terraform uses the default value. However, it can be overridden using tfvars, CLI, or environment variables."
 
 resource "azurerm_virtual_network" "vnet" { # This block defines an Azure Virtual Network resource.
   name                = var.vnet_name
