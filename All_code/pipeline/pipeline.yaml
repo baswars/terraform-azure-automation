@@ -1,0 +1,247 @@
+name: b15pipeline
+
+trigger:
+  branches:
+    include:
+      - main
+      - master
+    exclude:
+      - feature*
+  batch: true
+
+variables: 
+  service_con: infra-ashoksc-Infra01022026
+  rg_name: rg-dev
+  Storage_account: devstoragedevaccount
+  container: terraformcotainer
+  Work_dir: $(System.DefaultWorkingDirectory)/Env/dev
+
+pool:
+  name: default
+  demands:
+    - Agent.Name -equals vm-agent
+stages:
+  - stage: TerraformInitPlan
+    displayName: Terraform Init & Plan Stage
+    jobs:
+    - job: TerraformInitPlan  
+      displayName: Terraform Init & Plan
+      steps:
+      - task: TerraformInstaller@1
+        displayName: Install Terraform
+        inputs:
+          terraformVersion: 'latest'
+      
+      - task: TerraformTask@5
+        displayName: Terraform Init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(Work_dir)'
+          backendServiceArm: $(service_con)
+          backendAzureRmResourceGroupName: '$(rg_name)'
+          backendAzureRmStorageAccountName: '$(Storage_account)'
+          backendAzureRmContainerName: '$(container)'
+          backendAzureRmKey: 'terraformb15.tfstate'
+
+      - task: TerraformTask@5
+        displayName: Terraform Validate
+        inputs:
+          provider: 'azurerm'
+          command: 'validate'
+          workingDirectory: '$(Work_dir)'
+
+      - task: TerraformTask@5
+        displayName: Terraform Plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(Work_dir)'
+          environmentServiceNameAzureRM: $(service_con)
+
+  - stage: IaCSecurityScanStage
+    displayName: Infrastructure as Code Security Scans
+    dependsOn: TerraformInitPlan 
+    jobs:
+    - job: tfsecscanJob
+      displayName: tfsecscan
+      steps:
+      - task: tfsec@1
+        displayName: tfsec Terraform Scan
+        inputs:
+          version: v1.26.0
+          dir: $(Work_dir)
+
+    - job: TruffleHogScanJob
+      displayName: TruffleHog Secret Scan
+      dependsOn: tfsecscanJob
+      steps:
+      - task: PowerShell@2
+        displayName: Install & Run TruffleHog (Windows tar.gz)
+        inputs:
+          targetType: inline
+          script: |
+            $ErrorActionPreference = "Stop"
+            $url = "https://github.com/trufflesecurity/trufflehog/releases/download/v3.92.5/trufflehog_3.92.5_windows_amd64.tar.gz"
+            $archive = "$(System.DefaultWorkingDirectory)\trufflehog.tar.gz"
+            $extractDir = "$(System.DefaultWorkingDirectory)\trufflehog"
+
+            Write-Host "Downloading TruffleHog..."
+            Invoke-WebRequest -Uri $url -OutFile $archive
+
+            Write-Host "Extracting tar.gz..."
+            New-Item -ItemType Directory -Force -Path $extractDir | Out-Null
+            tar -xzf $archive -C $extractDir
+
+            Write-Host "Verify TruffleHog..."
+            & "$extractDir\trufflehog.exe" --version
+
+            Write-Host "Running TruffleHog..."
+            & "$extractDir\trufflehog.exe" filesystem "$(System.DefaultWorkingDirectory)" `
+            --only-verified `
+            --json > "$(System.DefaultWorkingDirectory)\trufflehog.json"
+
+      - task: PublishBuildArtifacts@1
+        displayName: Publish TruffleHog Report
+        condition: always()
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)\trufflehog.json'
+          ArtifactName: 'TruffleHog-Report'
+    
+    - job: TflintScanJob
+      displayName: TFLint Scan
+      dependsOn: TruffleHogScanJob
+      steps:
+      - task: PowerShell@2
+        displayName: TflintInstall
+        inputs:
+          targetType: 'inline'
+          script: |
+            # Define the URL and paths for TFLint download
+            $url = "https://github.com/terraform-linters/tflint/releases/download/v0.54.0/tflint_windows_amd64.zip"
+            $zipPath = "$(System.DefaultWorkingDirectory)\tflint.zip"
+            $extractPath = "$(System.DefaultWorkingDirectory)\tflint"
+                    
+            # Step 1: Download TFLint
+            Write-Host "Downloading TFLint..."
+            Invoke-WebRequest -Uri $url -OutFile $zipPath
+                    
+            # Step 2: Extract the downloaded ZIP file
+            Write-Host "Extracting TFLint..."
+            Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+                    
+            # Step 3: Add TFLint directory to the environment PATH variable
+            Write-Host "Adding TFLint to PATH..."
+            $env:Path += ";$extractPath"
+            setx PATH "$env:Path" /M  # This sets the PATH for all future tasks
+                    
+            # Step 4: Verify the TFLint installation
+            Write-Host "Verifying TFLint installation..."
+            tflint --version
+
+      - task: CmdLine@2
+        displayName: Run TFLint
+        inputs:
+          script: 'echo "Runnig tflint...." && $(System.DefaultWorkingDirectory)\tflint\tflint.exe  --chdir="$(System.DefaultWorkingDirectory)" --recursive --format=json > tflint.json'
+          workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+      - task: PublishBuildArtifacts@1
+        displayName: Publish TFLint JSON Report
+        condition: always()
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)\tflint.json'
+          ArtifactName: 'tflint-report'
+    
+    - job: CheckovScanJob
+      dependsOn: TflintScanJob
+      displayName: Checkov IaC Security Scan
+      steps:  
+      - task: PowerShell@2
+        displayName: InstallCheckOv
+        inputs:
+          targetType: 'inline'
+          script: |
+            $ErrorActionPreference = "Stop"
+            # URL for the checkov zip file
+            $url = "https://github.com/bridgecrewio/checkov/releases/download/3.2.499/checkov_windows_X86_64.zip"
+            # Step 1: Download the checkov zip file
+            # save the downloaded zip file 
+            $zipPath = "$(System.DefaultWorkingDirectory)\checkov.zip"
+            # extract the zip file to 
+            $extractPath = "$(System.DefaultWorkingDirectory)\checkov"
+            Write-Host "Downloading checkov..."
+            Invoke-WebRequest -Uri $url -OutFile $zipPath
+        
+            Write-Host "Extracting checkov..."
+            Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+
+            # Step 3: Add checkov directory to the environment PATH variable
+            $env:Path += ";$extractPath\dist"
+          
+      - task: CmdLine@2
+        displayName: Run Checkov
+        inputs:
+          workingDirectory: $(System.DefaultWorkingDirectory)
+          script: |
+            echo Running Checkov....
+            checkov\dist\checkov.exe -d . -o junitxml > checkov\checkovresult.xml
+
+      - task: PublishTestResults@2
+        displayName: Publish Checkov Results
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: checkov\checkovresult.xml
+          testRunTitle: Checkov IaC Security Scan
+  - stage: ManualValidationStage
+    displayName: ManualValidation
+    dependsOn: IaCSecurityScanStage
+    jobs: 
+    - job: ManualValidateJob
+      displayName: Manual Validation
+      pool: server
+      timeoutInMinutes: 2
+      steps:
+       - task: ManualValidation@1
+         inputs:
+          notifyUsers: sachin.baswar@outlook.com
+          approvers: sachin.baswar@outlook.com
+          instructions: Please review Terraform plan and approve
+
+  - stage: TerraformApply
+    displayName: TerraformApplystage
+    dependsOn: ManualValidationStage
+    jobs:
+    - job: TerraformApply  
+      displayName: Terraform Apply
+      steps:
+      - task: TerraformInstaller@1
+        displayName: Install Terraform
+        inputs:
+          terraformVersion: 'latest'
+      
+      - task: TerraformTask@5
+        displayName: Terraform Init
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          workingDirectory: '$(Work_dir)'
+          backendServiceArm: $(service_con)
+          backendAzureRmResourceGroupName: '$(rg_name)'
+          backendAzureRmStorageAccountName: '$(Storage_account)'
+          backendAzureRmContainerName: '$(container)'
+          backendAzureRmKey: 'terraformb15.tfstate'
+      
+      - task: TerraformTask@5
+        displayName: Terraform Plan
+        inputs:
+          provider: 'azurerm'
+          command: 'plan'
+          workingDirectory: '$(Work_dir)'
+          environmentServiceNameAzureRM: $(service_con)
+      - task: TerraformTask@5
+        displayName: Terraform Apply
+        inputs:
+          provider: 'azurerm'
+          command: 'apply'
+          workingDirectory: '$(Work_dir)'
+          environmentServiceNameAzureRM: $(service_con)
