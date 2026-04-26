@@ -1,0 +1,583 @@
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day009For_each_with_map_linuxVM> terraform plan                       
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.vm["vm1"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "azureuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg1"
+      + size                                                   = "Standard_D4s_v3"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "UbuntuServer"
+          + publisher = "Canonical"
+          + sku       = "18.04-LTS"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_linux_virtual_machine.vm["vm2"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "azureuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "southindia"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm2"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg2"
+      + size                                                   = "Standard_D4s_v3"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "UbuntuServer"
+          + publisher = "Canonical"
+          + sku       = "18.04-LTS"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic["nic1"] will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "westeurope"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-vm"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface.nic["nic2"] will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "southindia"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-vm2"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg2"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig2"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_public_ip.pip["pip1"] will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "westeurope"
+      + name                    = "pip-vm"
+      + resource_group_name     = "rg1"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_public_ip.pip["pip2"] will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "southindia"
+      + name                    = "pip-vm2"
+      + resource_group_name     = "rg2"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_resource_group.rg["rg1"] will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "rg1"
+    }
+
+  # azurerm_resource_group.rg["rg2"] will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "southindia"
+      + name     = "rg2"
+    }
+
+  # azurerm_subnet.subnet["subnet1"] will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet-vm"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg1"
+      + virtual_network_name                          = "vnet-vm"
+    }
+
+  # azurerm_subnet.subnet["subnet2"] will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                              = [
+          + "10.1.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet-vm2"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg2"
+      + virtual_network_name                          = "vnet-vm2"
+    }
+
+  # azurerm_virtual_network.vnet["vnet1"] will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "westeurope"
+      + name                           = "vnet-vm"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg1"
+      + subnet                         = (known after apply)
+    }
+
+  # azurerm_virtual_network.vnet["vnet2"] will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.1.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "southindia"
+      + name                           = "vnet-vm2"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg2"
+      + subnet                         = (known after apply)
+    }
+
+Plan: 12 to add, 0 to change, 0 to destroy.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+Releasing state lock. This may take a few moments...
+PS C:\Users\Sachin Baswar\Desktop\Terraform\terraform-azure-automation\Day009For_each_with_map_linuxVM> terraform apply  
+Acquiring state lock. This may take a few moments...
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_linux_virtual_machine.vm["vm1"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "azureuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "westeurope"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg1"
+      + size                                                   = "Standard_D4s_v3"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "UbuntuServer"
+          + publisher = "Canonical"
+          + sku       = "18.04-LTS"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_linux_virtual_machine.vm["vm2"] will be created
+  + resource "azurerm_linux_virtual_machine" "vm" {
+      + admin_password                                         = (sensitive value)
+      + admin_username                                         = "azureuser"
+      + allow_extension_operations                             = (known after apply)
+      + bypass_platform_safety_checks_on_user_schedule_enabled = false
+      + computer_name                                          = (known after apply)
+      + disable_password_authentication                        = false
+      + disk_controller_type                                   = (known after apply)
+      + extensions_time_budget                                 = "PT1H30M"
+      + id                                                     = (known after apply)
+      + location                                               = "southindia"
+      + max_bid_price                                          = -1
+      + name                                                   = "linuxvm2"
+      + network_interface_ids                                  = (known after apply)
+      + os_managed_disk_id                                     = (known after apply)
+      + patch_assessment_mode                                  = (known after apply)
+      + patch_mode                                             = (known after apply)
+      + platform_fault_domain                                  = -1
+      + priority                                               = "Regular"
+      + private_ip_address                                     = (known after apply)
+      + private_ip_addresses                                   = (known after apply)
+      + provision_vm_agent                                     = (known after apply)
+      + public_ip_address                                      = (known after apply)
+      + public_ip_addresses                                    = (known after apply)
+      + resource_group_name                                    = "rg2"
+      + size                                                   = "Standard_D4s_v3"
+      + virtual_machine_id                                     = (known after apply)
+      + vm_agent_platform_updates_enabled                      = (known after apply)
+
+      + os_disk {
+          + caching                   = "ReadWrite"
+          + disk_size_gb              = (known after apply)
+          + id                        = (known after apply)
+          + name                      = (known after apply)
+          + storage_account_type      = "Standard_LRS"
+          + write_accelerator_enabled = false
+        }
+
+      + source_image_reference {
+          + offer     = "UbuntuServer"
+          + publisher = "Canonical"
+          + sku       = "18.04-LTS"
+          + version   = "latest"
+        }
+
+      + termination_notification (known after apply)
+    }
+
+  # azurerm_network_interface.nic["nic1"] will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "westeurope"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-vm"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg1"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig1"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_network_interface.nic["nic2"] will be created
+  + resource "azurerm_network_interface" "nic" {
+      + accelerated_networking_enabled = false
+      + applied_dns_servers            = (known after apply)
+      + id                             = (known after apply)
+      + internal_domain_name_suffix    = (known after apply)
+      + ip_forwarding_enabled          = false
+      + location                       = "southindia"
+      + mac_address                    = (known after apply)
+      + name                           = "nic-vm2"
+      + private_ip_address             = (known after apply)
+      + private_ip_addresses           = (known after apply)
+      + resource_group_name            = "rg2"
+      + virtual_machine_id             = (known after apply)
+
+      + ip_configuration {
+          + gateway_load_balancer_frontend_ip_configuration_id = (known after apply)
+          + name                                               = "ipconfig2"
+          + primary                                            = (known after apply)
+          + private_ip_address                                 = (known after apply)
+          + private_ip_address_allocation                      = "Dynamic"
+          + private_ip_address_version                         = "IPv4"
+          + public_ip_address_id                               = (known after apply)
+          + subnet_id                                          = (known after apply)
+        }
+    }
+
+  # azurerm_public_ip.pip["pip1"] will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "westeurope"
+      + name                    = "pip-vm"
+      + resource_group_name     = "rg1"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_public_ip.pip["pip2"] will be created
+  + resource "azurerm_public_ip" "pip" {
+      + allocation_method       = "Static"
+      + ddos_protection_mode    = "VirtualNetworkInherited"
+      + fqdn                    = (known after apply)
+      + id                      = (known after apply)
+      + idle_timeout_in_minutes = 4
+      + ip_address              = (known after apply)
+      + ip_version              = "IPv4"
+      + location                = "southindia"
+      + name                    = "pip-vm2"
+      + resource_group_name     = "rg2"
+      + sku                     = "Standard"
+      + sku_tier                = "Regional"
+    }
+
+  # azurerm_resource_group.rg["rg1"] will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "rg1"
+    }
+
+  # azurerm_resource_group.rg["rg2"] will be created
+  + resource "azurerm_resource_group" "rg" {
+      + id       = (known after apply)
+      + location = "southindia"
+      + name     = "rg2"
+    }
+
+  # azurerm_subnet.subnet["subnet1"] will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                              = [
+          + "10.0.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet-vm"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg1"
+      + virtual_network_name                          = "vnet-vm"
+    }
+
+  # azurerm_subnet.subnet["subnet2"] will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                              = [
+          + "10.1.1.0/24",
+        ]
+      + default_outbound_access_enabled               = true
+      + id                                            = (known after apply)
+      + name                                          = "subnet-vm2"
+      + private_endpoint_network_policies             = "Disabled"
+      + private_link_service_network_policies_enabled = true
+      + resource_group_name                           = "rg2"
+      + virtual_network_name                          = "vnet-vm2"
+    }
+
+  # azurerm_virtual_network.vnet["vnet1"] will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "westeurope"
+      + name                           = "vnet-vm"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg1"
+      + subnet                         = (known after apply)
+    }
+
+  # azurerm_virtual_network.vnet["vnet2"] will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space                  = [
+          + "10.1.0.0/16",
+        ]
+      + dns_servers                    = (known after apply)
+      + guid                           = (known after apply)
+      + id                             = (known after apply)
+      + location                       = "southindia"
+      + name                           = "vnet-vm2"
+      + private_endpoint_vnet_policies = "Disabled"
+      + resource_group_name            = "rg2"
+      + subnet                         = (known after apply)
+    }
+
+Plan: 12 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+azurerm_resource_group.rg["rg1"]: Creating...
+azurerm_resource_group.rg["rg2"]: Creating...
+azurerm_resource_group.rg["rg2"]: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg["rg1"]: Still creating... [00m10s elapsed]
+azurerm_resource_group.rg["rg2"]: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg["rg1"]: Still creating... [00m20s elapsed]
+azurerm_resource_group.rg["rg1"]: Creation complete after 25s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1]
+azurerm_resource_group.rg["rg2"]: Creation complete after 26s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2]
+azurerm_virtual_network.vnet["vnet1"]: Creating...
+azurerm_virtual_network.vnet["vnet2"]: Creating...
+azurerm_public_ip.pip["pip1"]: Creating...
+azurerm_public_ip.pip["pip2"]: Creating...
+azurerm_public_ip.pip["pip2"]: Creation complete after 3s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/pip-vm2]
+azurerm_public_ip.pip["pip1"]: Creation complete after 4s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pip-vm]
+azurerm_virtual_network.vnet["vnet2"]: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2/providers/Microsoft.Network/virtualNetworks/vnet-vm2]
+azurerm_virtual_network.vnet["vnet1"]: Creation complete after 7s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-vm]
+azurerm_subnet.subnet["subnet1"]: Creating...
+azurerm_subnet.subnet["subnet2"]: Creating...
+azurerm_subnet.subnet["subnet2"]: Creation complete after 5s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2/providers/Microsoft.Network/virtualNetworks/vnet-vm2/subnets/subnet-vm2]
+azurerm_subnet.subnet["subnet1"]: Still creating... [00m10s elapsed]
+azurerm_subnet.subnet["subnet1"]: Creation complete after 13s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet-vm/subnets/subnet-vm]
+azurerm_network_interface.nic["nic2"]: Creating...
+azurerm_network_interface.nic["nic1"]: Creating...
+azurerm_network_interface.nic["nic2"]: Creation complete after 4s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2/providers/Microsoft.Network/networkInterfaces/nic-vm2]
+azurerm_network_interface.nic["nic1"]: Creation complete after 6s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1/providers/Microsoft.Network/networkInterfaces/nic-vm]
+azurerm_linux_virtual_machine.vm["vm2"]: Creating...
+azurerm_linux_virtual_machine.vm["vm1"]: Creating...
+azurerm_linux_virtual_machine.vm["vm2"]: Still creating... [00m10s elapsed]
+azurerm_linux_virtual_machine.vm["vm1"]: Still creating... [00m10s elapsed]
+azurerm_linux_virtual_machine.vm["vm1"]: Still creating... [00m20s elapsed]
+azurerm_linux_virtual_machine.vm["vm2"]: Still creating... [00m20s elapsed]
+azurerm_linux_virtual_machine.vm["vm1"]: Still creating... [00m30s elapsed]
+azurerm_linux_virtual_machine.vm["vm2"]: Still creating... [00m30s elapsed]
+azurerm_linux_virtual_machine.vm["vm1"]: Still creating... [00m40s elapsed]
+azurerm_linux_virtual_machine.vm["vm2"]: Still creating... [00m40s elapsed]
+azurerm_linux_virtual_machine.vm["vm2"]: Creation complete after 49s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg2/providers/Microsoft.Compute/virtualMachines/linuxvm2]
+azurerm_linux_virtual_machine.vm["vm1"]: Still creating... [00m50s elapsed]
+azurerm_linux_virtual_machine.vm["vm1"]: Creation complete after 54s [id=/subscriptions/a863c08a-12ed-48e5-a659-57ef8bbfe98c/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/linuxvm]
+Releasing state lock. This may take a few moments...
+
+Apply complete! Resources: 12 added, 0 changed, 0 destroyed.
