@@ -4,6 +4,7 @@ In Terraform, a variable is used to parameterize the configuration, meaning we d
 
 A variable is a placeholder for a value that can be defined once and used across the Terraform configuration.
 
+
 For example, instead of writing "East US" everywhere, we define a variable and reuse it.
 
 🔹 Why is it needed?

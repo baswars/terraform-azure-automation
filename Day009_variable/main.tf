@@ -1,5 +1,41 @@
-variable "rg_name" {
-  default = "rg-vm" 
+# Variable:
+  # Variables are used to parameterize Terraform configurations, allowing you to define values that can be easily changed without modifying the code. 
+  # They provide flexibility and reusability to your Terraform scripts. 
+  # variable make coce more dynamic and adaptable to different environments or scenarios.
+  # variable make code generic and reusable, allowing you to use the same configuration with different values without modifying the code itself.
+
+# variable "LABEL" {}
+  # the LAVEL after variable keyword is the name of the variable, which is used to reference the variable in the configuration.
+  # the following argument supportted in variable block:
+    # default: This argument allows you to specify a default value for the variable. If no value is provided during runtime, Terraform will use the default value.
+    # type: This argument defines the data type of the variable, such as string, number, list, map, etc. It helps ensure that the correct type of value is provided when using the variable.
+    # description: This argument allows you to provide a description for the variable, which can be helpful for documentation purposes and to clarify the purpose of the variable.
+    # sensitive: This argument indicates whether the variable contains sensitive information, such as passwords or API keys. If set to true, Terraform will treat the variable as sensitive and will not display its value in logs or output.
+    # validation: This argument allows you to define custom validation rules for the variable, ensuring that the provided value meets certain criteria before being accepted.
+  
+    # variable "LABEL" {
+    #   default = "value"
+    #   type = type
+    #   description = "Description of the variable"
+    #   sensitive = boolean
+    #}
+
+    ### Type:
+      # The type argument in a variable block specifies the data type of the variable. 
+      # It helps ensure that the correct type of value is provided when using the variable.
+      # The supported data types for variables in Terraform include:
+        # string: A sequence of characters, such as "Hello, World!".
+        # number: A numeric value, such as 42 or 3.14.
+        # bool: A boolean value, either true or false.
+        # list: An ordered collection of values, such as ["apple", "banana", "cherry"].
+        # map: A collection of key-value pairs, such as {"key1": "value1", "key2": "value2"}.
+        # object: A complex data structure that can contain multiple attributes with different types.
+      # if you do not specify the type of variable. terraform assigne value as default type any. 
+
+
+
+variable "rg_name" { # rg_name is label of the variable, which is used to reference the variable in the configuration.
+  default = "rg-vm" # default value of the variable, which will be used if no value is provided during runtime. In this case, the default value is "rg-vm". 
 }
 
 
