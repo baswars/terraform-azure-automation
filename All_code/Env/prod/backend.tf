@@ -3,7 +3,7 @@ terraform {
     resource_group_name  = "rg-backend"
     storage_account_name = "storageaccobackend"
     container_name       = "storagecontainerbackend"
-    key                  = "terraform.dev.tfstate"
+    key                  = "terraform.prod.tfstate"
 
   }
 }

@@ -1,6 +1,6 @@
 resource_group1 = {
   rg = {
-    name     = "rg-dev"
+    name     = "rg-prod"
     location = "Central India"
 
   }
@@ -9,7 +9,7 @@ resource_group1 = {
 storage_account = {
   st = {
     name                     = "storagacccountsachin"
-    resource_group_name      = "rg-dev"
+    resource_group_name      = "rg-prod"
     location                 = "Central India"
     account_tier             = "Standard"
     account_replication_type = "LRS"
@@ -20,9 +20,9 @@ storage_account = {
 
 virtual_network1 = {
   vnet = {
-    name                = "vnet-dev"
+    name                = "vnet-prod"
     location            = "Central India"
-    resource_group_name = "rg-dev"
+    resource_group_name = "rg-prod"
     address_space       = ["10.0.0.0/16"]
 
 
@@ -30,135 +30,135 @@ virtual_network1 = {
 }
 subnet = {
   subnet1 = {
-    name                 = "subnet-frontend-dev"
-    resource_group_name  = "rg-dev"
-    virtual_network_name = "vnet-dev"
+    name                 = "subnet-frontend-prod"
+    resource_group_name  = "rg-prod"
+    virtual_network_name = "vnet-prod"
     address_prefixes     = ["10.0.1.0/24"]
   }
   subnet2 = {
     name                 = "AzureBastionSubnet"
-    resource_group_name  = "rg-dev"
-    virtual_network_name = "vnet-dev"
+    resource_group_name  = "rg-prod"
+    virtual_network_name = "vnet-prod"
     address_prefixes     = ["10.0.2.0/24"]
   }
   subnet3 = {
-    name                 = "subnet-backend"
-    resource_group_name  = "rg-dev"
-    virtual_network_name = "vnet-dev"
+    name                 = "subnet-backend-prod"
+    resource_group_name  = "rg-prod"
+    virtual_network_name = "vnet-prod"
     address_prefixes     = ["10.0.3.0/24"]
   }
 }
 pip = {
   pip1 = {
-    name                = "pip--dev"
+    name                = "pip-frontend-prod"
     location            = "Central India"
-    resource_group_name = "rg-dev"
+    resource_group_name = "rg-prod"
     allocation_method   = "Static"
     sku                 = "Standard"
 
   }
-  # pip2 = {
-  #   name                = "pip-backend-dev"
-  #   location            = "Central India" 
-  #   resource_group_name = "rg-dev"
-  #   allocation_method   = "Static"
-  #   sku                 = "Standard"
+  pip2 = {
+    name                = "pip-backend-prod"
+    location            = "Central India"
+    resource_group_name = "rg-prod"
+    allocation_method   = "Static"
+    sku                 = "Standard"
 
-  # }
+  }
 }
 
 nic = {
   nic1 = {
-    name                          = "nic-frontend-dev"
-    pip_name                      = "pip-frontend-dev"
+    name                          = "nic-frontend-prod"
+    pip_name                      = "pip-frontend-prod"
     location                      = "Central India"
-    resource_group_name           = "rg-dev"
-    subnet_name                   = "subnet-frontend-dev"
-    virtual_network_name          = "vnet-dev"
+    resource_group_name           = "rg-prod"
+    subnet_name                   = "subnet-frontend-prod"
+    virtual_network_name          = "vnet-prod"
     private_ip_address_allocation = "Dynamic"
   }
   nic2 = {
-    name                          = "nic-backend-dev"
-    pip_name                      = "pip-backend-dev"
+    name                          = "nic-backend-prod"
+    pip_name                      = "pip-backend-prod"
     location                      = "Central India"
-    resource_group_name           = "rg-dev"
-    subnet_name                   = "subnet-backend-dev"
-    virtual_network_name          = "vnet-dev"
+    resource_group_name           = "rg-prod"
+    subnet_name                   = "subnet-backend-prod"
+    virtual_network_name          = "vnet-prod"
     private_ip_address_allocation = "Dynamic"
   }
 }
 linux_vm = {
   vm1 = {
-    name                = "linux-vm-frontend-dev"
+    name                = "linux-vm-frontend-prod"
     location            = "Central India"
-    resource_group_name = "rg-dev"
+    resource_group_name = "rg-prod"
     size                = "Standard_B2as_v2"
     # admin_username                  = "adminuser"
     # admin_password                  = "Admin@123"
     disable_password_authentication = false
-    name_nic                        = "nic-frontend-dev"
-    kv_name                         = "kvterrasachinr"
+    name_nic                        = "nic-frontend-prod"
+    kv_name                         = "kvterrasachinprod"
     username_name                   = "username"
     password_name                   = "password"
   }
   vm2 = {
-    name                = "linux-vm-backend"
+    name                = "linux-vm-backend-prod"
     location            = "Central India"
-    resource_group_name = "rg-dev"
+    resource_group_name = "rg-prod"
     size                = "Standard_B2as_v2"
     # admin_username                  = "adminuser"
     # admin_password                  = "Admin@123"
     disable_password_authentication = false
-    name_nic                        = "nic-backend"
-    kv_name                         = "kvterrasachinr"
+    name_nic                        = "nic-backend-prod"
+    kv_name                         = "kvterrasachinprod"
     username_name                   = "username"
     password_name                   = "password"
   }
 }
 nsg = {
   nsg1 = {
-    name                 = "nsg-frontend-dev"
+    name                 = "nsg-frontend-prod"
     location             = "Central India"
-    resource_group_name  = "rg-dev"
-    name_nic             = "nic-frontend-dev"
-    subnet_name          = "subnet-frontend-dev"
-    virtual_network_name = "vnet-dev"
+    resource_group_name  = "rg-prod"
+    name_nic             = "nic-frontend-prod"
+    subnet_name          = "subnet-frontend-prod"
+    virtual_network_name = "vnet-prod"
   }
   nsg2 = {
-    name                 = "nsg-backend-dev"
+    name                 = "nsg-backend-prod"
     location             = "Central India"
-    resource_group_name  = "rg-dev"
-    name_nic             = "nic-backend"
-    subnet_name          = "subnet-backend"
-    virtual_network_name = "vnet-dev"
+    resource_group_name  = "rg-prod"
+    name_nic             = "nic-backend-prod"
+    subnet_name          = "subnet-backend-prod"
+    virtual_network_name = "vnet-prod"
   }
 }
 kayv = {
   kv = {
-    name                       = "kvterrasachinr"
+    name                       = "kvterrasachinprod"
     location                   = "Central India"
-    resource_group_name        = "rg-dev"
+    resource_group_name        = "rg-prod"
     sku_name                   = "premium"
     soft_delete_retention_days = "7"
   }
 }
 bastion = {
   bas = {
-    name                 = "bastionhost"
+    name                 = "bastion-prod"
     location             = "Central India"
-    resource_group_name  = "rg-dev"
-    virtual_network_name = "vnet-dev"
+    resource_group_name  = "rg-prod"
+    virtual_network_name = "vnet-prod"
     subnet_name          = "AzureBastionSubnet"
-    pip_name             = "pip-dev"
+    pip_name             = "pip-prod"
   }
 }
 mssqlserver = {
   server = {
     name                = "sqlserver2662"
-    resource_group_name = "rg-dev"
+    resource_group_name = "rg-prod"
     location            = "Central India"
     minimum_tls_version = "1.2"
-    kv_name             = "kvterrasachinr"
+    kv_name             = "kvterrasachinprod"
     username_name       = "username"
     password_name       = "password"
   }
@@ -166,16 +166,16 @@ mssqlserver = {
 }
 mssqldatabase = {
   db = {
-    name                = "sachin-db"
-    resource_group_name = "rg-dev"
+    name                = "prod-db"
+    resource_group_name = "rg-prod"
     server_name         = "sqlserver2662"
   }
 }
 
 acr = {
   acr = {
-    name                = "sachinacr"
-    resource_group_name = "rg-dev"
+    name                = "prod-acr"
+    resource_group_name = "rg-prod"
     location            = "Central India"
     sku                 = "Premium"
     admin_enabled       = false
@@ -183,8 +183,8 @@ acr = {
 }
 aks = {
   aks1 = {
-    name                = "aks"
-    resource_group_name = "rg-dev"
+    name                = "aks-prod"
+    resource_group_name = "rg-prod"
     location            = "Central India"
     dns_prefix          = "aks"
     node_pool_name      = "default"
